@@ -1,0 +1,27 @@
+.body_section_wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: #f4f4f5;
+
+  .body_left_section {
+    width: 18%;
+    min-height: 100vh;
+    display: block;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    padding: 2rem 0rem;
+    background-color: #1c1f22;
+  }
+
+  .body_right_section {
+    width: 82%;
+    min-height: 100vh;
+    padding: 2rem;
+    position: relative;
+
+    .footer {
+      position: fixed;
+      bottom: 0;
+    }
+  }
+}
