@@ -1,8 +1,6 @@
 const MCustomer = require("../models/medicine/MCustomer");
 
 
-
-
 // Add customer
 const addCustomer = async (req,res)=>{
     try {

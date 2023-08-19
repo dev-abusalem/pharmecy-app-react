@@ -4,11 +4,12 @@ import { GoThreeBars } from "react-icons/go";
 import { Link } from "react-router-dom";
 import imgpreview from "../../assets/images/avater.jpg"
 import axios from "axios";
-import {toast} from "react-toastify"
+import {ToastContainer, toast} from "react-toastify"
 
 function AddMedicine() {
   const [cate, setCate] = useState([])
   const [units, setUnit] = useState([])
+  const [types, setType] = useState([])
 
   // State of change value of select tag
   const [unitValue, setUnitValue] = useState(null)
@@ -19,7 +20,7 @@ const [strength , setStrength] = useState("");
 const [boxsize, setBoxSize] = useState("");
 const [shelf , setShelf ] = useState("");
 const [mcategory , setmMategory ] = useState("");
-const [medicinetype, setMedicineType] = useState();
+const [medicinetype, setMedicineType] = useState("");
 const [manufacturer , setManufacturer ] = useState("");
 const [vat, setVat] = useState("");
 const [status , setStatus ] = useState("Active");
@@ -33,15 +34,17 @@ const [manufacprice  , setManufacPrice ] = useState("");
 const [igta   , setIGTA  ] = useState("");
 
 
+console.log({igta:igta,manufacprice:manufacprice,price:price})
+
 const handleSubmit = async (e) =>{
 e.preventDefault();
 
 
-  uploadMimage(mphoto);
+  // uploadMimage(mphoto);
 
 
 try {
-  const res = await axios.post("/medicine/add",
+  const res = await axios.post("/medicine/medicine/add",
   {
     barcode:barcode,
     strength:strength,
@@ -52,13 +55,13 @@ try {
     manufacturer:manufacturer,
     vat:vat,
     status:status,
-    mname:mname,
-    gname:gname,
+    medicinename:mname,
+    genericname:gname,
     munit:munit,
     medicinedetails:medicinedetails,
-    price:price,
-    mphoto:mphoto,
-    manufacprice:manufacprice,
+    medicineprice:price,
+    mfeatureimage:mphoto,
+    manufactureprice:manufacprice,
     igta:igta,
   }
   );
@@ -75,18 +78,10 @@ try {
 }
 }
 
-const uploadMimage = async (mphoto) =>{
+// const uploadMimage = async (mphoto) =>{
     
-}
+// }
 
-
-
-// const objectUrl = URL.createObjectURL(selectedFile)
-//       setPreview(objectUrl)
-
-
-
-// show all 
   const showAllCate = async () =>{
     const res = await axios.get("/medicine/cate");
     setCate(res.data);
@@ -103,11 +98,28 @@ const uploadMimage = async (mphoto) =>{
     showAllUnit()
   },[])
 
-  
+  const showAllType = async () =>{
+    const res = await axios.get("/medicine/type");
+    setType(res.data);
+  }
+  useEffect(()=>{  
+    showAllType()
+  },[])
 
-
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setMphoto(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
   return (
     <section>
+      <ToastContainer />
+
       <div className="form_container">
         <div className="form_header">
           <div className="title">
@@ -164,7 +176,7 @@ const uploadMimage = async (mphoto) =>{
               <div className="form_flied">
                 <label htmlFor="medicinecate">
                   {" "}
-                  Category <span style={{ color: "red" }}>*</span> :
+                  Medicine Category <span style={{ color: "red" }}>*</span> :
                 </label>
                 <select onChange={(e)=>setmMategory(e.target.value)} id="medicinecate">
                 <option>Select An Option</option>
@@ -177,16 +189,18 @@ const uploadMimage = async (mphoto) =>{
                 </select> 
                 
               </div>
-
+              
               <div className="form_flied">
                 <label htmlFor="medicinetype"> Medicine Type :</label>
-                <input
-                  placeholder="Medicine Type"
-                  type="text"
-                  id="medicinetype"
-                  onChange={(e)=>setMedicineType(e.target.value)}
+                <select onChange={(e)=>setMedicineType(e.target.value)} id="medicinecate">
+                <option>Select An Option</option>
 
-                />
+                  {
+                    types.map((type,i)=>{
+                        return <option value={type.typename} key={i}>{type.typename}</option>
+                    })
+                  }
+                </select> 
               </div>
 
               <div className="form_flied">
@@ -291,7 +305,7 @@ const uploadMimage = async (mphoto) =>{
               <div className="form_flied">
                 <label htmlFor="medicineunit">
                   {" "}
-                  Unit <span style={{ color: "red" }}>*</span> :
+                  Medicine Unit <span style={{ color: "red" }}>*</span> :
                 </label>
                 <select onChange={(e)=>setMunit(e.target.value)} id="medicineunit">
                 <option>Select An Option</option>                  {
@@ -332,7 +346,8 @@ const uploadMimage = async (mphoto) =>{
                 <label htmlFor="medicineimage"> Image :</label>
                 <input type="file" id="medicineimage" 
                 
-                onChange={(e)=>setMphoto(e.target.value[0])}
+                // onChange={(e)=>setMphoto(e.target.value[0])}
+                onChange={handleImageChange}
 
                 />
               </div>
@@ -347,14 +362,14 @@ const uploadMimage = async (mphoto) =>{
                   type="text"
                   id="manufactureprice"
                   required
-                  onChange={(e)=>setManufacPrice(e.target.value[0])}
+                  onChange={(e)=>setManufacPrice(e.target.value)}
 
                 />
               </div>
               <div className="form_flied">
                 <label htmlFor="medicineigta"> IGTA :</label>
                 <input placeholder="IGTA" type="text" id="medicineigta"
-                      onChange={(e)=>setIGTA(e.target.value[0])}
+                      onChange={(e)=>setIGTA(e.target.value)}
 
                 />
               </div>
@@ -362,7 +377,7 @@ const uploadMimage = async (mphoto) =>{
               <div className="form_flied">
                 <label htmlFor="imgpreview"> Preview :</label>
                 <span style={{width:'70%', textAlign:'left'}} id="imgpreview">
-                <img style={{maxWidth:"120px", maxHeight:"100px"}} src="/" alt="imapreview" />
+                <img style={{width:"70px"}} src={mphoto} alt="imapreview" />
                 </span>
                 
               </div>

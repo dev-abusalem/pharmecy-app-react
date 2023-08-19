@@ -166,7 +166,7 @@ export default function LeftSidebar() {
           </li>
           <li>
             <HiOutlineCode />
-            <Link to="/">Custom Code</Link>
+            <Link to="/customcode">Custom Code</Link>
           </li>
         </ul>
       </div>

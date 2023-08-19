@@ -22,13 +22,14 @@ app.use(cookieParser())
 // Mongo DB Connection mongodb://localhost:27017
 mongoose.set("strictQuery", false);
 mongoose
-  .connect("mongodb://0.0.0.0:27017/medical")
+  .connect(process.env.MONGO_URL)
   .then(() => {
     console.log("DB Connection Success !");
   })
   .catch((error) => {
     console.log(error);
   });
+
 ////////////////////////////// Starts Routes////////////////////////////////////////////
 
 // Routes Auth

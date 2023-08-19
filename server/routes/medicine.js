@@ -4,12 +4,15 @@ const MedicineType = require("../models/MedicineType");
 const MedicineUnit = require("../models/MedicineUnit");
 const cutomerAllDataControl = require("../controller/getAllCustomer");
 const cutomerAddControl = require("../controller/addCustomer");
+const medicineAddControl = require("../controller/addMedicine");
+const medicineListControl = require("../controller/getAllMedicine");
 const {cutomerDeleteCont} = require("../controller/editDeleteCusomer");
 // Add Medicine
 
 
 
 
+////////////////////////////////////// Medicine List /////////////////////////////////////////
 
 
 ////////////////////////////////////// Medicine Category /////////////////////////////////////////
@@ -101,8 +104,13 @@ route.get("/type", async (req,res)=>{
     }
 })
 
-////////////////////////////////////// Medicine Type /////////////////////////////////////////
+////////////////////////////////////// Medicine  /////////////////////////////////////////
+//Add Medicine
+route.post("/medicine/add", medicineAddControl);
 
+////////////////////////////////////// Medicine  /////////////////////////////////////////
+//Add Medicine
+route.get("/medicines", medicineListControl);
 
 ////////////////////////////////////// Medicine Customer /////////////////////////////////////////
 //Add Customer

@@ -27,6 +27,7 @@ import MedicineUnitList from "./components/medicine/MedicineUnitList";
 import CustomarPaid from "./components/customar/CustomarPaid";
 import CustomarCredit from "./components/customar/CustomarCredit";
 import EditMedicineCate from "./components/medicine/EditMedicineCate";
+import CustomCSSPage from "./components/customcode/CustomCSSPage";
 
 const Layout = () => {
   const token = localStorage.getItem("token")
@@ -133,6 +134,12 @@ const router = createBrowserRouter([
         path: "/medicine/unit/list",
         element: <MedicineUnitList />,
       },
+// Custom CSS Code Editor
+      {
+        path: "/customcode",
+        element: <CustomCSSPage />,
+      },
+
     ],
   },
   {

@@ -20,6 +20,7 @@ route.post("/register", async (req, res) => {
         name:req.body.name,
         email:req.body.email,
         password:req.body.password,
+        isAdminn:req.body.isAdminn,
         profileImg:req.body.profileImg
       });
 
@@ -54,11 +55,12 @@ route.post("/login", async (req, res) => {
       
       if(isUser.password == req.body.password){
 
-        const token = jwt.sign({ foo: 'bar' }, "medicalAuthToken");
+        // const token = jwt.sign({ foo: 'bar' }, "medicalAuthToken");
         
         res.status(200).json({
           message:"Login successfull",
-          token:token
+          token:"medicalAuthToken",
+          adminRoll:isUser.isAdmin
         })
 
       }else{

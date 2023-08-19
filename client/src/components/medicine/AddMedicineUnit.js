@@ -18,7 +18,7 @@ const AddMedicineUnit = () => {
       );
 
       toast.success(res.data);
-
+      setUnitName("")
     } catch (error) {
       toast.error(error.response.data);
       console.log(error)
@@ -52,6 +52,7 @@ const AddMedicineUnit = () => {
                   id="medicinetype"
                   onChange={(e)=>setUnitName(e.target.value)}
                   required
+                  value={unitname}
                 />
               </div>
               <div className="form_flied">

@@ -18,7 +18,8 @@ const AddMedicineCate = () => {
       );
 
       toast.success(res.data);
-
+      setCateName("");
+  
     } catch (error) {
       toast.error(error.response.data);
       console.log(error)
@@ -52,6 +53,7 @@ const AddMedicineCate = () => {
                   id="medicinetype"
                   onChange={(e)=>setCateName(e.target.value)}
                   required
+                  value={catename}
                 />
               </div>
               <div className="form_flied">

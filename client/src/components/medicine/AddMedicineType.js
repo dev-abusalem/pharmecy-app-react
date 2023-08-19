@@ -18,7 +18,7 @@ const AddMedicineType = () => {
       );
 
       toast.success(res.data);
-
+      setTypeName("")
     } catch (error) {
       toast.error(error.response.data);
       console.log(error)
@@ -51,6 +51,7 @@ const AddMedicineType = () => {
               id="medicinetype"
               onChange={(e)=>setTypeName(e.target.value)}
               required
+              value={typename}
             />
           </div>
           <div className="form_flied">

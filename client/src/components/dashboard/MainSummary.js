@@ -5,6 +5,7 @@ import { GiMedicinePills, GiMedicines } from 'react-icons/gi';
 import "./scss/mainsummary.scss"
 const MainSummary = () => {
     const [hidewcm, setHideWCM] = useState(false);
+    const isAdmin = localStorage.getItem("adminStatus");
 
     function handleWCMessage(){
         setHideWCM(!hidewcm)
@@ -13,7 +14,7 @@ const MainSummary = () => {
     <>
         <section className={hidewcm ? 'welcome__message_hide' : "" }>
             <div className="welcome__message_wrapper">
-                <span>This is <strong>Admin</strong> User</span>
+                <span>This is <strong>{isAdmin}</strong> User</span>
                 <span onClick={handleWCMessage}>x</span>   
             </div>
         </section>
