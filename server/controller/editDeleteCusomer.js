@@ -1,7 +1,5 @@
 const MCustomer = require("../models/medicine/MCustomer");
 
-
-
 // Delete
 const cutomerDeleteCont = async (req, res) => {
     try {
@@ -12,8 +10,6 @@ const cutomerDeleteCont = async (req, res) => {
       res.status(500).json(error);
     }
   }
-  
-  
   
   
   

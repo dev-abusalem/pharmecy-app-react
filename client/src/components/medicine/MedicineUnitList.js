@@ -99,8 +99,8 @@ const MedicineUnitList = () => {
                   <td>{unit.unitname}</td>
                   <td>{unit.status}</td>                
                   <td>
-                    <div className="table_action_button">
-                      <Link to={`/unit/edit/${unit._id}`}><FiEdit /></Link>
+                    <div className="table_action_button_medicine_cate">
+                      <Link to={`/unit/edit/${unit._id}`}><FiEdit className="table_action_edit_button" /></Link>
                       <MdDelete />
                     </div>
                   </td>

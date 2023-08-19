@@ -92,8 +92,8 @@ const MedicineTypeList = () => {
                   <td>{type.typename}</td>
                   <td>{type.status}</td>                
                   <td>
-                    <div className="table_action_button">
-                      <Link to={`/medicine/edit/${type._id}`}><FiEdit /></Link>
+                    <div className="table_action_button_medicine_cate">
+                      <Link to={`/medicine/edit/${type._id}`}><FiEdit className="table_action_edit_button" /></Link>
                       <MdDelete />
                     </div>
                   </td>

@@ -34,8 +34,6 @@ const [manufacprice  , setManufacPrice ] = useState("");
 const [igta   , setIGTA  ] = useState("");
 
 
-console.log({igta:igta,manufacprice:manufacprice,price:price})
-
 const handleSubmit = async (e) =>{
 e.preventDefault();
 

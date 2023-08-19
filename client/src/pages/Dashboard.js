@@ -5,6 +5,7 @@ import MainSummary from '../components/dashboard/MainSummary'
 import MonthlyProgress from '../components/dashboard/MonthlyProgress'
 import TodayReport from '../components/dashboard/TodayReport'
 import "./scss/dashboard.scss"
+
 const Dashboard = () => {
 
   return (

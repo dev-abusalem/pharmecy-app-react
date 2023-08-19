@@ -9,27 +9,22 @@ import { ToastContainer, toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
-
-
+import { fetchMedicines } from '../../redux/state/medicineSlice/medicineSlice'; // Your medicineSlice file
+import { useDispatch, useSelector } from 'react-redux';
+import ConfirmModal from "../../shared/ConfirmModal ";
 const MedicineList = () => {
-  const [medicines, setMedicines] = useState([])
-  const medicineList = [...medicines]
+ 
+  const medicines  = useSelector((state)=>state.medicines.medicines);
+  const loading  = useSelector((state)=>state.medicines.isLoading);
 
-  const [loading, setLoading] = useState(false);
   const [selectValue, setSelectValue] = useState(10);
   const [searchs, setSearchs] = useState("");
 
-  const showAllMedicine = async () =>{
-    setLoading(true);
-    const res = await axios.get("/medicine/medicines");
-    setLoading(false);
-    setMedicines(res.data);
-
-  }
-
-  useEffect(()=>{  
-    showAllMedicine()
-  },[])
+  const dispatch = useDispatch()
+  useEffect(() => {
+    // Dispatch the fetchMedicines action when the component mounts
+    dispatch(fetchMedicines());
+  }, [dispatch]); // Ensure that the action is dispatched only once
 
   console.log(medicines)
 
@@ -38,18 +33,35 @@ function handleChange(e){
   setSelectValue(parseInt(e.target.value));
 
 }
-const visibleMedicineData = medicineList.slice(0, selectValue);
+const visibleMedicineData = medicines.slice(0, selectValue);
 /////////////////// Change Text Value/////////////////////////////
 
-// const data = customerData.filter((customer)=>{
-//   return customer.name.toLowerCase().includes(searchs.toLowerCase())
-// })
-
-const filteredMedicineData = visibleMedicineData.filter((medicine) =>
-medicine.medicinename && medicine.medicinename.toLowerCase().includes(searchs.toLowerCase())
+const filteredMedicineData = visibleMedicineData.filter((medicines) =>
+medicines.medicinename && medicines.medicinename.toLowerCase().includes(searchs.toLowerCase())
 );
 
-// Delet Customer Info
+
+// Delet Medicine Info
+
+
+const handleDeleteMedicine = async ({ id, medicinename }) => {
+
+  const message = `Do you want to delete ${medicinename} ?`
+
+  window.alert(message);
+
+    try {
+      const res = await axios.delete(`/medicine/medicine/${id}`);
+      toast.success(res.data);
+      window.location.reload();
+    } catch (error) {
+      toast.error(error);
+    }
+
+};
+
+
+
 
   return (
     <section>
@@ -98,6 +110,7 @@ medicine.medicinename && medicine.medicinename.toLowerCase().includes(searchs.to
           {/* container sub header end */}
 
           {/* container  body start */}
+          {filteredMedicineData.length > 0 ? 
           <div className="table_wrapper">
             <table className="table table-hover">
               <thead className=" table-success">
@@ -138,7 +151,7 @@ medicine.medicinename && medicine.medicinename.toLowerCase().includes(searchs.to
                   <td>
                     <div className="table_action_button">
                       <FiEdit />
-                      <MdDelete />
+                      <MdDelete onClick={()=>handleDeleteMedicine({id:medicine._id, medicinename:medicine.medicinename})} />
                     </div>
                   </td>
                 </tr>
@@ -159,7 +172,7 @@ medicine.medicinename && medicine.medicinename.toLowerCase().includes(searchs.to
               visible={true}
               />
               }
-          </div>
+          </div> : <h1 style={{textAlign:'center', color:'red'}}>Medicine Not Found !</h1> }
           {/* container body end */}
 
           {/* container footer start */}

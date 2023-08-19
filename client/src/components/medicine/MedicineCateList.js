@@ -8,6 +8,8 @@ import { MdDelete } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import "./scss/medicinecate.scss"
+
 const MedicineCateList = () => {
   const [cate, setCate] = useState([])
 
@@ -89,8 +91,8 @@ const MedicineCateList = () => {
                   <td>{cat.catename}</td>
                   <td>{cat.status}</td>                
                   <td>
-                    <div className="table_action_button">
-                      <Link to={`/medicine/edit/${cat._id}`}><FiEdit /></Link>
+                    <div className="table_action_button_medicine_cate">
+                      <Link  to={`/medicine/edit/${cat._id}`}><FiEdit className="table_action_edit_button" /></Link>
                       <MdDelete />
                     </div>
                   </td>

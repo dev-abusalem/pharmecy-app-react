@@ -6,14 +6,11 @@ const cutomerAllDataControl = require("../controller/getAllCustomer");
 const cutomerAddControl = require("../controller/addCustomer");
 const medicineAddControl = require("../controller/addMedicine");
 const medicineListControl = require("../controller/getAllMedicine");
-const {cutomerDeleteCont} = require("../controller/editDeleteCusomer");
+const { medicineDeleteControl } = require('../controller/deleteMedicine');
 // Add Medicine
 
 
-
-
 ////////////////////////////////////// Medicine List /////////////////////////////////////////
-
 
 ////////////////////////////////////// Medicine Category /////////////////////////////////////////
 // Add Medicine Category
@@ -112,6 +109,9 @@ route.post("/medicine/add", medicineAddControl);
 //Add Medicine
 route.get("/medicines", medicineListControl);
 
+////////////////////////////////////// Medicine  /////////////////////////////////////////
+//Add Medicine
+route.delete('/medicine/:_id', medicineDeleteControl);
 ////////////////////////////////////// Medicine Customer /////////////////////////////////////////
 //Add Customer
 route.post("/customer/add", cutomerAddControl);
@@ -120,7 +120,7 @@ route.post("/customer/add", cutomerAddControl);
 route.get("/customer", cutomerAllDataControl);
 
 //Delete Customer
-route.delete("/customer/:_id", cutomerDeleteCont);
+// route.delete("/customer/:_id", cutomerDeleteCont);
 
 ////////////////////////////////////// Medicine Customer /////////////////////////////////////////
 
