@@ -4,6 +4,7 @@ const app = express();
 const dotenv = require("dotenv");
 const authRoute = require("./routes/auth");
 const medicineRoute = require("./routes/medicine");
+const customerRoute = require("./routes/customer");
 const cors = require('cors');
 var cookieParser = require('cookie-parser')
 
@@ -34,8 +35,10 @@ mongoose
 
 // Routes Auth
 app.use("/auth", authRoute);
-// Routes Auth
+// Routes Medicine
 app.use("/medicine", medicineRoute );
+// Routes Customer
+app.use("/customer", customerRoute );
 
 //////////////////////////////// End Routes/////////////////////////////////////////////
 // Start Server

@@ -21,6 +21,10 @@ const Header = () => {
    },2000)
   }
 
+
+  const storedUserInfo = localStorage.getItem('userInfo');
+  const userInfo = JSON.parse(storedUserInfo);
+
   return (
     <>
       <header>
@@ -46,7 +50,7 @@ const Header = () => {
                     <span>0</span>
                   </a>
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-4 mt-1">
                   <a onClick={handleOpenAccount} href="#" className="expaire">
                     <TbUserCircle style={{fontSize:"25px"}} />
                   </a>
@@ -60,15 +64,15 @@ const Header = () => {
 
             <div className={showAccount ? "" : "hide_myaccount_by_click"}>
             <div className="my_profile_header mt-1">
-              <div className="card-header">
-                <h3>Abu Salem</h3>
+              <div className="card-headers">
+                <h3 style={{textTransform:'capitalize'}}>{userInfo.name}</h3>
               </div>
-              <div className="card-body">
-                <a href="/">abusalem@gmail.com</a><br/>
-                <a href="/">My Account</a>
+              <div className="card-bodys">
+                <a style={{fontSize:'18px' , textDecoration:'underline'}} href="/">{userInfo.email}</a><br/>
+                <a style={{fontSize:'18px'}} href="/">My Account</a>
               </div>
-              <div className="card-footer">
-                <a onClick={handleLogout} href="/">Logout</a>
+              <div className="card-footers">
+                <a style={{fontSize:'18px'}} onClick={handleLogout} href="/">Logout</a>
               </div>
           </div>
             </div>

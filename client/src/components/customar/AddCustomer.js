@@ -5,7 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 
-function AddCustomar() {
+function AddCustomer() {
 
   //fullname,email1,phone,address1,state,country,mobile,email2,contact,address2,city,zip
   const [fullname, setFullName] = useState("");
@@ -67,15 +67,15 @@ const handleSubmit = async (e) =>{
           <div className="form_header_buttons">
             <div className="button_wrapper">
               <GoThreeBars />
-              <Link to="/customar/list">Customar List</Link>
+              <Link to="/customer/list">Customar List</Link>
             </div>
             <div className="button_wrapper">
               <GoThreeBars />
-              <Link to="/customar/paid">Paid Customar</Link>
+              <Link to="/customer/paid">Paid Customar</Link>
             </div>
             <div className="button_wrapper">
               <GoThreeBars />
-              <Link to="/customar/cradit">Cradit Customar</Link>
+              <Link to="/customer/cradit">Cradit Customar</Link>
             </div>
           </div>
         </div>
@@ -180,4 +180,4 @@ onChange={(e)=>setZip(e.target.value)}                />
     </section>
   );
 }
-export default AddCustomar;
+export default AddCustomer;

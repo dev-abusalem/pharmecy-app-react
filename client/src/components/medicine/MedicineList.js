@@ -12,6 +12,7 @@ import { ThreeDots } from "react-loader-spinner";
 import { fetchMedicines } from '../../redux/state/medicineSlice/medicineSlice'; // Your medicineSlice file
 import { useDispatch, useSelector } from 'react-redux';
 import ConfirmModal from "../../shared/ConfirmModal ";
+import Swal from "sweetalert2";
 const MedicineList = () => {
  
   const medicines  = useSelector((state)=>state.medicines.medicines);
@@ -43,23 +44,34 @@ medicines.medicinename && medicines.medicinename.toLowerCase().includes(searchs.
 
 // Delet Medicine Info
 
-
 const handleDeleteMedicine = async ({ id, medicinename }) => {
+  try {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    });
 
-  const message = `Do you want to delete ${medicinename} ?`
-
-  window.alert(message);
-
-    try {
+    if (result.isConfirmed) {
       const res = await axios.delete(`/medicine/medicine/${id}`);
-      toast.success(res.data);
-      window.location.reload();
-    } catch (error) {
-      toast.error(error);
+
+      Swal.fire(res.data);
+
+      setTimeout(()=>{
+        window.location.reload();
+      },3000)
+
+    }else{
+      toast.error(`You cancel delete ${medicinename} !`)
     }
-
+  } catch (error) {
+    toast.error(error);
+  }
 };
-
 
 
 
@@ -84,6 +96,7 @@ const handleDeleteMedicine = async ({ id, medicinename }) => {
           {/* container header end */}
 
           {/* container sub header start */}
+
           <div className="form_sub_header">
             <div className="form_sub_header_left">
               <div className="sub_header_item1">
@@ -102,7 +115,7 @@ const handleDeleteMedicine = async ({ id, medicinename }) => {
             </div>
             <div className="form_sub_header_right">
               <div className="list_search">
-                <input onChange={(e)=>setSearchs(e.target.value)} type="text" placeholder="Search...." />
+                <input onChange={(e)=>setSearchs(e.target.value)} type="text" placeholder="Search By Name...." />
                 <GoSearch />
               </div>
             </div>
@@ -172,7 +185,7 @@ const handleDeleteMedicine = async ({ id, medicinename }) => {
               visible={true}
               />
               }
-          </div> : <h1 style={{textAlign:'center', color:'red'}}>Medicine Not Found !</h1> }
+          </div> : <h1 style={{textAlign:'center', color:'red' , paddingTop:"1.5rem", paddingBottom:"1.5rem"}}>Medicine Not Found !</h1> }
           {/* container body end */}
 
           {/* container footer start */}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState , useRef } from "react";
 import { GoSearch, GoThreeBars } from "react-icons/go";
 import { GrDocumentPdf } from "react-icons/gr";
 import { AiOutlinePlus } from "react-icons/ai";
@@ -10,14 +10,15 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
 import { toast, ToastContainer } from "react-toastify";
+import { DownloadTableExcel } from 'react-export-table-to-excel';
+import Swal from 'sweetalert2';
 
-const CustomarList = () => {
+const CustomerList = () => {
 
   const [customers, setCustomers] = useState([])
   const [loading, setLoading] = useState(false);
   const [selectValue, setSelectValue] = useState(10);
   const [searchs, setSearchs] = useState("");
-
   const customerData = [...customers]
 
   const showAllCate = async () =>{
@@ -49,33 +50,47 @@ const filteredCustomerData = visibleCustomerData.filter((customer) =>
   customer.fullname && customer.fullname.toLowerCase().includes(searchs.toLowerCase())
 );
 
-// Delet Customer Info
-const handleDeleteClick = async (id) => {
+
+const handleDeleteCustomer = async ({ id, fullname }) => {
   try {
-    const res = await axios.delete(`/medicine/customer/${id}`)
-    console.log(res.data);
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    });
 
-    toast.error(res.data);
-    
-    setTimeout(()=>{
-      window.location.reload(true)
-    }, 3000)
+    if (result.isConfirmed) {
+      const res = await axios.delete(`/customer/customer/${id}`);
 
+      Swal.fire(res.data);
+
+      setTimeout(()=>{
+        window.location.reload();
+      },3000)
+
+    }else{
+      toast.error(`You cancel delete ${fullname} !`)
+    }
   } catch (error) {
-    console.log(error)
+    toast.error(error);
   }
+};
 
 
-}
+const tableRef = useRef(null);
 
-console.log(searchs)
-  return (
+
+return (
     <section>
       <ToastContainer />
       <div className="customar_list_wrapper">
         <div className="customar_list">
           {/* container header start */}
-
+          
           <div className="form_header">
             <div className="title">
               <h3>Customer List</h3>
@@ -83,15 +98,15 @@ console.log(searchs)
             <div className="form_header_buttons">
               <div className="button_wrapper">
                 <AiOutlinePlus />
-                <Link to="/customar/add">Add Customer</Link>
+                <Link to="/customer/add">Add Customer</Link>
               </div>
               <div className="button_wrapper">
                 <GoThreeBars />
-                <Link to="/customar/paid">Paid Customar</Link>
+                <Link to="/customer/paid">Paid Customar</Link>
               </div>
               <div className="button_wrapper">
                 <GoThreeBars />
-                <Link to="/customar/cradit">Cradit Customar</Link>
+                <Link to="/customer/cradit">Cradit Customar</Link>
               </div>
             </div>
           </div>
@@ -112,21 +127,28 @@ console.log(searchs)
               </div>
               <div className="sub_header_item2">
                 <GrDocumentPdf />
+                <DownloadTableExcel
+                    filename="Customer details table"
+                    sheet="Customer details"
+                    currentTableRef={tableRef.current}
+                >
                 <SiMicrosoftexcel />
+              </DownloadTableExcel>
               </div>
             </div>
             <div className="form_sub_header_right">
               <div className="list_search">
-                <input onChange={(e)=>setSearchs(e.target.value)} type="text" placeholder="Search...." />
+                <input onChange={(e)=>setSearchs(e.target.value)} type="text" placeholder="Search By Name...." />
                 <GoSearch />
               </div>
             </div>
           </div>
           {/* container sub header end */}
-
+          
           {/* container  body start */}
+          {filteredCustomerData.length > 0 ? 
           <div className="table_wrapper">
-            <table className="table table-hover">
+            <table ref={tableRef} className="table table-hover">
               <thead className=" table-success">
                 <tr>
                   <th scope="col">SL</th>
@@ -155,8 +177,8 @@ console.log(searchs)
                   <td>{customer.city}</td>
                   <td>
                     <div className="table_action_button">
-                      <FiEdit />
-                      <Link to="#" onClick={() => handleDeleteClick(customer._id)}><MdDelete/></Link> 
+                     <Link to={`/customer/edit/${customer._id}`} ><FiEdit /></Link>
+                      <Link to="#" onClick={() => handleDeleteCustomer({id:customer._id , fullname:customer.fullname})}><MdDelete/></Link> 
                     </div>
                   </td>
                 </tr>
@@ -178,7 +200,7 @@ console.log(searchs)
   }
               </tbody>
             </table>
-          </div>
+          </div>: <h1 style={{textAlign:'center', color:'red' , paddingTop:"1.5rem", paddingBottom:"1.5rem"}}>Customer Not Found !</h1> }
           {/* container body end */}
 
           {/* container footer start */}
@@ -189,4 +211,4 @@ console.log(searchs)
   );
 };
 
-export default CustomarList;
+export default CustomerList;

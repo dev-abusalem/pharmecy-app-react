@@ -9,7 +9,6 @@ var cookieParser = require('cookie-parser')
 // Register
 route.post("/register", async (req, res) => {
 
-  User.f
   
   try {
     const isUser = await User.findOne({email:req.body.email});
@@ -55,12 +54,16 @@ route.post("/login", async (req, res) => {
       
       if(isUser.password == req.body.password){
 
-        // const token = jwt.sign({ foo: 'bar' }, "medicalAuthToken");
+        const token = jwt.sign({ foo: 'bar' }, "medicalAuthToken");
         
         res.status(200).json({
           message:"Login successfull",
-          token:"medicalAuthToken",
-          adminRoll:isUser.isAdmin
+          token:token,
+          userInfo:{
+            adminRoll:isUser.isAdmin,
+            email:isUser.email,
+            name:isUser.name
+          }
         })
 
       }else{

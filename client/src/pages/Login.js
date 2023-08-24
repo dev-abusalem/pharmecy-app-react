@@ -21,7 +21,8 @@ const handleSubmit = async (e) =>{
 
     toast.success(res.data.message);
     localStorage.setItem("token", res.data.token);
-    localStorage.setItem("adminStatus", res.data.adminRoll);
+    const userInfo = res.data.userInfo
+    localStorage.setItem("userInfo", JSON.stringify(userInfo));
     setTimeout(()=>{
       navigate("/");
       window.location.reload(true)

@@ -1,7 +1,7 @@
 import React from "react";
 
-const CustomarPaid = () => {
+const CustomerPaid = () => {
   return <div>CustomarPaid</div>;
 };
 
-export default CustomarPaid;
+export default CustomerPaid;

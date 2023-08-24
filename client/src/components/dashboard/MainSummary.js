@@ -3,13 +3,17 @@ import { BsCalendarX, BsFillCalendar2XFill } from 'react-icons/bs';
 import { FaLinode, FaUsers } from 'react-icons/fa';
 import { GiMedicinePills, GiMedicines } from 'react-icons/gi';
 import "./scss/mainsummary.scss"
+import { useSelector } from 'react-redux';
 const MainSummary = () => {
     const [hidewcm, setHideWCM] = useState(false);
-    const isAdmin = localStorage.getItem("adminStatus");
+    const storedUserInfo = localStorage.getItem('userInfo');
+    const userInfo = JSON.parse(storedUserInfo);
+    const isAdmin = userInfo.adminRoll
 
     function handleWCMessage(){
         setHideWCM(!hidewcm)
     }
+    const totalMedicine = useSelector((state)=>state.medicines.medicines)
   return (
     <>
         <section className={hidewcm ? 'welcome__message_hide' : "" }>
@@ -49,7 +53,16 @@ const MainSummary = () => {
                                 </div>
                                 <div>
                                     <span>TOTAL MEDICINE</span>
-                                    <h6>78</h6>
+                                    {
+                                    totalMedicine.length <= 10 ? (
+                                        <h6 style={{ color: 'red' }}>{totalMedicine.length}</h6>
+                                    ) : totalMedicine.length <= 50 ? (
+                                        <h6 style={{ color: 'orange' }}>{totalMedicine.length}</h6>
+                                    ) : (
+                                        <h6>{totalMedicine.length}</h6>
+                                    )
+                                    }
+
                                 </div>
                                 </div>
                                 <div className="card-footer">

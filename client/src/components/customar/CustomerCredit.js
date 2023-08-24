@@ -1,7 +1,7 @@
 import React from "react";
 
-const CustomarCredit = () => {
+const CustomerCredit = () => {
   return <div>CustomarCradit</div>;
 };
 
-export default CustomarCredit;
+export default CustomerCredit;

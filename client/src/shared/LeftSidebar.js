@@ -57,16 +57,16 @@ export default function LeftSidebar() {
             } dashboarddropdown`}
           >
             <li>
-              <Link to="/customar/add">Add Customar</Link>
+              <Link to="/customer/add">Add Customar</Link>
             </li>
             <li>
-              <Link to="/customar/list">Customar List</Link>
+              <Link to="/customer/list">Customar List</Link>
             </li>
             <li>
-              <Link to="/customar/credit">Credit Customar</Link>
+              <Link to="/customer/credit">Credit Customar</Link>
             </li>
             <li>
-              <Link to="/customar/paid">Paid Customar</Link>
+              <Link to="/customer/paid">Paid Customar</Link>
             </li>
           </ul>
 

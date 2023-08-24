@@ -12,8 +12,6 @@ import Forget from "./pages/Forget";
 import Dashboard from "./pages/Dashboard";
 import LeftSidebar from "./shared/LeftSidebar";
 import "./App.scss";
-import AddCustomar from "./components/customar/AddCustomar";
-import CustomarList from "./components/customar/CustomarList";
 import "./shared/scss/rightsidebar.scss";
 import Footer from "./shared/Footer";
 import AddMedicine from "./components/medicine/AddMedicine";
@@ -24,12 +22,18 @@ import AddMedicineType from "./components/medicine/AddMedicineType";
 import MedicineTypeList from "./components/medicine/MedicineTypeList";
 import AddMedicineUnit from "./components/medicine/AddMedicineUnit";
 import MedicineUnitList from "./components/medicine/MedicineUnitList";
-import CustomarPaid from "./components/customar/CustomarPaid";
-import CustomarCredit from "./components/customar/CustomarCredit";
 import EditMedicineCate from "./components/medicine/EditMedicineCate";
 import CustomCode from "./pages/CustomCode";
+import { useSelector } from "react-redux";
+import EditCustomer from "./components/customar/EditCustomer";
+import CustomerCredit from "./components/customar/CustomerCredit";
+import CustomerPaid from "./components/customar/CustomerPaid";
+import CustomerList from "./components/customar/CustomerList";
+import AddCustomer from "./components/customar/AddCustomer";
+
+
 const Layout = () => {
-  const token = localStorage.getItem("token")
+  const token = localStorage.getItem("token");
   return (
 
     <>
@@ -79,20 +83,24 @@ const router = createBrowserRouter([
       // Customar section
 
       {
-        path: "/customar/add",
-        element: <AddCustomar />,
+        path: "/customer/add",
+        element: <AddCustomer />,
       },
       {
-        path: "/customar/list",
-        element: <CustomarList />,
+        path: "/customer/list",
+        element: <CustomerList />,
       },
       {
-        path: "/customar/paid",
-        element: <CustomarPaid />,
+        path: "/customer/paid",
+        element: <CustomerPaid />,
       },
       {
-        path: "/customar/credit",
-        element: <CustomarCredit />,
+        path: "/customer/credit",
+        element: <CustomerCredit />,
+      },
+      {
+        path: "/customer/edit/:id",
+        element: <EditCustomer />,
       },
 
       // medicine section

@@ -37,7 +37,7 @@ const AddMedicineCate = () => {
           <div className="form_header_buttons">
             <div className="button_wrapper">
               <GoThreeBars />
-              <Link to="/customar/list">Medicine Category List</Link>
+              <Link to="/medicine/cate/list">Medicine Category List</Link>
             </div>
           </div>
         </div>
